@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <defs>
+        <style>
+      .icon-bg { fill: #4CAF50; }
+      .icon-symbol { fill: white; font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; }
+        </style>
+    </defs>
+    <rect class="icon-bg" width="16" height="16" rx="2"/>
+    <text class="icon-symbol" x="8" y="13" text-anchor="middle">⚙</text>
+</svg>
