@@ -14,19 +14,23 @@ Chrome Extension Manifest V3 để dịch và tra Wikipedia khi bôi đen text t
 
 ```
 selection-translate-wiki-extension/
-├── manifest.json           # Manifest V3
+├── manifest.json
 ├── src/
-│   ├── content.js          # Content script (chạy trên trang web)
-│   ├── content.css         # Style cho popup
-│   ├── background.js       # Service worker background
-│   └── api/
-│       ├── translate.js    # Logic dịch (optional)
-│       └── wiki.js         # Logic Wikipedia (optional)
+│   ├── background/
+│   │   ├── background.js
+│   │   ├── storage.js
+│   │   ├── highlight-storage.js
+│   │   ├── translate.js
+│   │   └── wiki.js
+│   └── content/
+│       ├── content.js
+│       ├── content.css
+│       └── highlight-dom.js
 ├── assets/
-│   ├── icon-16.svg
-│   ├── icon-48.svg
-│   └── icon-128.svg
-└── README.md              # File này
+│   ├── icon-16.png
+│   ├── icon-48.png
+│   └── icon-128.png
+└── README.md
 ```
 
 ## Cách sử dụng
@@ -89,7 +93,7 @@ Có thể dễ dàng thay đổi sang:
 - **DeepL API** (cần API key)
 - **LibreTranslate** (tự host hoặc dùng public API)
 
-Code được thiết kế để thay đổi hàm `translateText()` trong `src/background.js` dễ dàng.
+Code được thiết kế để thay đổi hàm `translateText()` trong `src/background/translate.js` dễ dàng.
 
 ### 2. Wikipedia
 
@@ -114,7 +118,7 @@ https://vi.wikipedia.org/api/rest_v1/page/summary/TITLE
   "manifest_version": 3,
   "name": "Selection Translate & Wiki",
   "version": "1.0",
-  "permissions": ["activeTab", "scripting", "storage"],
+  "permissions": ["storage"],
   "host_permissions": [
     "https://vi.wikipedia.org/*",
     "https://en.wikipedia.org/*",
@@ -139,10 +143,10 @@ https://vi.wikipedia.org/api/rest_v1/page/summary/TITLE
 
 ## Thay đổi icon
 
-File icon là SVG và có thể:
+File icon hiện dùng PNG và có thể thay đổi:
 
-1. **Sửa file SVG** (`assets/icon-*.svg`)
-2. **Convert SVG thành PNG** (dùng online converter)
+1. **Sửa file PNG** (`assets/icon-*.png`)
+2. **Xuất lại đúng kích thước** 16/48/128
 3. **Sửa manifest.json** nếu thay đổi tên file
 
 ## Debug
@@ -169,7 +173,7 @@ Bạn có thể mở rộng extension:
 1. **Thêm ngôn ngữ dịch** - Sửa `langpair` trong `translateText()`
 2. **Thêm tính năng** - Thêm tab mới trong popup
 3. **Lưu lịch sử** - Dùng `chrome.storage.local`
-4. **Custom API** - Thay đổi endpoint trong background.js
+4. **Custom API** - Thay đổi endpoint trong `src/background/*`
 
 ## License
 

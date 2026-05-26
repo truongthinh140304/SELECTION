@@ -8,16 +8,20 @@
 selection-translate-wiki-extension/
 ├── manifest.json
 ├── src/
-│   ├── content.js
-│   ├── content.css
-│   ├── background.js
-│   └── api/
-│       ├── translate.js
-│       └── wiki.js
+│   ├── background/
+│   │   ├── background.js
+│   │   ├── storage.js
+│   │   ├── highlight-storage.js
+│   │   ├── translate.js
+│   │   └── wiki.js
+│   └── content/
+│       ├── content.js
+│       ├── content.css
+│       └── highlight-dom.js
 ├── assets/
-│   ├── icon-16.svg
-│   ├── icon-48.svg
-│   └── icon-128.svg
+│   ├── icon-16.png
+│   ├── icon-48.png
+│   └── icon-128.png
 └── README.md
 ```
 
@@ -202,10 +206,10 @@ Nếu muốn gỡ cài đặt:
 A: Không, vì nó cần kết nối internet để gọi API Wikipedia và dịch.
 
 **Q: Có thể dịch sang ngôn ngữ khác không?**  
-A: Có, sửa `langpair=en|vi` trong `src/background.js` thành ngôn ngữ khác.
+A: Có, sửa `langpair=en|vi` trong `src/background/translate.js` thành ngôn ngữ khác.
 
-**Q: Extension này có bao giờ thu thập dữ liệu không?**  
-A: Không, tất cả xử lý đều ở local, không lưu hay gửi dữ liệu gì.
+**Q: Extension này có gửi dữ liệu ra ngoài không?**  
+A: Có. Text được chọn sẽ được gửi tới MyMemory/Wikipedia khi bạn dùng tab Dịch/Wiki. Dữ liệu highlight và kho lưu trữ được lưu local bằng `chrome.storage.local`.
 
 ---
 
