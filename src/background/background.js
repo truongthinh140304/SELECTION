@@ -2,7 +2,7 @@
  * Background service worker.
  */
 
-importScripts("storage.js", "highlight-storage.js", "translate.js", "wiki.js");
+importScripts("storage.js", "highlight-storage.js", "translate.js", "wiki.js", "summarize.js");
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "translate") {
@@ -19,6 +19,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         handleSaveHighlight(request.text, request.color, request.pageUrl, sendResponse);
     } else if (request.action === "deleteHighlight") {
         handleDeleteHighlight(request.id, request.pageUrl, sendResponse);
+    } else if (request.action === "summarizeSelection") {
+        handleSummarizeSelection(request.text, sendResponse);
+    } else if (request.action === "summarizeFullPage") {
+        handleSummarizeFullPage(request.text, sendResponse);
+    } else if (request.action === "saveUrlArchive") {
+        handleSaveUrlArchive(request.title, request.url, sendResponse);
+    } else if (request.action === "getUrlArchiveItems") {
+        handleGetUrlArchiveItems(sendResponse);
+    } else if (request.action === "deleteUrlArchiveItem") {
+        handleDeleteUrlArchiveItem(request.id, sendResponse);
     }
 
     return true;
@@ -82,5 +92,46 @@ function handleSaveHighlight(text, color, pageUrl, sendResponse) {
 function handleDeleteHighlight(id, pageUrl, sendResponse) {
     deleteHighlight(id, pageUrl)
         .then(() => sendResponse({ success: true }))
+        .catch((error) => sendResponse({ success: false, error: error.message }));
+}
+
+function handleSummarizeSelection(text, sendResponse) {
+    summarizeSelection(text)
+        .then((summary) => sendResponse({ success: true, summary }))
+        .catch((error) => sendResponse({ success: false, error: error.message }));
+}
+
+function handleSummarizeFullPage(text, sendResponse) {
+    summarizeContent(text)
+        .then((summary) => sendResponse({ success: true, summary }))
+        .catch((error) => sendResponse({ success: false, error: error.message }));
+}
+
+function handleSaveUrlArchive(title, url, sendResponse) {
+    saveUrlToArchive(title, url)
+        .then((item) =>
+            sendResponse({
+                success: true,
+                item: item,
+                message: "Đã lưu URL thành công!"
+            })
+        )
+        .catch((error) => sendResponse({ success: false, error: error.message }));
+}
+
+function handleGetUrlArchiveItems(sendResponse) {
+    getAllUrlArchiveItems()
+        .then((items) => sendResponse({ success: true, items }))
+        .catch((error) => sendResponse({ success: false, error: error.message, items: [] }));
+}
+
+function handleDeleteUrlArchiveItem(id, sendResponse) {
+    deleteUrlArchiveItem(id)
+        .then((deleted) =>
+            sendResponse({
+                success: deleted,
+                message: deleted ? "Đã xóa thành công!" : "Không tìm thấy item"
+            })
+        )
         .catch((error) => sendResponse({ success: false, error: error.message }));
 }

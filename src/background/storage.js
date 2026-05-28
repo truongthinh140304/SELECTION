@@ -72,3 +72,83 @@ async function getAllArchiveItems() {
         return [];
     }
 }
+
+/**
+ * ===== URL Archive Management =====
+ */
+
+const URL_STORAGE_KEY = "urlArchive";
+
+function readUrlArchiveFromStorage() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get(URL_STORAGE_KEY, (result) => {
+            if (chrome.runtime.lastError) {
+                reject(new Error(chrome.runtime.lastError.message));
+                return;
+            }
+            const data = result[URL_STORAGE_KEY];
+            resolve(Array.isArray(data) ? data : []);
+        });
+    });
+}
+
+function writeUrlArchiveToStorage(archive) {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.set({ [URL_STORAGE_KEY]: archive }, () => {
+            if (chrome.runtime.lastError) {
+                reject(new Error(chrome.runtime.lastError.message));
+                return;
+            }
+            resolve();
+        });
+    });
+}
+
+async function saveUrlToArchive(title, url) {
+    try {
+        const archive = await readUrlArchiveFromStorage();
+
+        // Kiểm tra URL đã tồn tại chưa
+        const urlExists = archive.some((item) => item.url === url);
+        if (urlExists) {
+            throw new Error("URL này đã được lưu");
+        }
+
+        const newItem = {
+            id: Date.now() + "_" + Math.random().toString(36).substr(2, 9),
+            title: title,
+            url: url,
+            savedAt: new Date().toISOString()
+        };
+
+        archive.unshift(newItem);
+        await writeUrlArchiveToStorage(archive);
+        return newItem;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+async function deleteUrlArchiveItem(id) {
+    try {
+        const archive = await readUrlArchiveFromStorage();
+        const filteredArchive = archive.filter((item) => item.id !== id);
+
+        if (filteredArchive.length === archive.length) {
+            return false;
+        }
+
+        await writeUrlArchiveToStorage(filteredArchive);
+        return true;
+    } catch (error) {
+        throw new Error(`Lỗi xóa: ${error.message}`);
+    }
+}
+
+async function getAllUrlArchiveItems() {
+    try {
+        return await readUrlArchiveFromStorage();
+    } catch (error) {
+        return [];
+    }
+}

@@ -9,7 +9,8 @@
     "host_permissions": [
         "https://vi.wikipedia.org/*",
         "https://en.wikipedia.org/*",
-        "https://api.mymemory.translated.net/*"
+        "https://api.mymemory.translated.net/*",
+        "https://generativelanguage.googleapis.com/*"
     ],
     "content_scripts": [
         {

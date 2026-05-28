@@ -13,7 +13,8 @@ selection-translate-wiki-extension/
 │   │   ├── storage.js
 │   │   ├── highlight-storage.js
 │   │   ├── translate.js
-│   │   └── wiki.js
+│   │   ├── wiki.js
+│   │   └── summarize.js
 │   └── content/
 │       ├── content.js
 │       ├── content.css
@@ -198,6 +199,107 @@ Nếu muốn gỡ cài đặt:
 💡 **Mẹo 1:** Click ra ngoài popup để đóng nó  
 💡 **Mẹo 2:** Bôi đen text khác sẽ di chuyển icon  
 💡 **Mẹo 3:** Bỏ chọn text (click vào trang) sẽ ẩn icon  
+
+---
+
+# 🎯 Hướng dẫn Tóm tắt với Gemini API
+
+## Bước 1: Lấy Gemini API Key
+
+1. Truy cập [Google AI Studio](https://makersuite.google.com/app/apikeys)
+2. Đăng nhập với tài khoản Google của bạn
+3. Click **"Create API Key"**
+4. Chọn **"Create API key in new project"** hoặc **"Create API key"**
+5. Copy API key (chuỗi dài như: `AIzaSy...`)
+
+## Bước 2: Thêm API Key vào Extension
+
+1. Mở file `src/background/summarize.js`
+2. Tìm dòng:
+   ```javascript
+   const GEMINI_API_KEY = ""; // TODO: Thêm API key của bạn
+   ```
+3. Thay thế bằng:
+   ```javascript
+   const GEMINI_API_KEY = "YOUR_API_KEY_HERE";
+   ```
+   (Thay `YOUR_API_KEY_HERE` bằng API key bạn vừa copy)
+4. Lưu file
+
+## Bước 3: Reload Extension
+
+1. Mở `chrome://extensions`
+2. Tìm "Selection Translate & Wiki"
+3. Click icon reload
+4. Extension sẽ reload
+
+## Bước 4: Test Tóm tắt
+
+### Test Tóm tắt Đoạn:
+```
+1. Mở website bất kỳ
+2. Bôi đen một đoạn text (ví dụ: "Trí tuệ nhân tạo (AI) là lĩnh vực khoa học máy tính...")
+3. Click icon → Popup mở
+4. Click tab "Tóm tắt"
+5. Click sub-tab "Tóm tắt đoạn"
+6. Chờ vài giây → Sẽ hiển thị tóm tắt
+```
+
+### Test Tóm tắt Tất cả:
+```
+1. Mở website
+2. Bôi đen bất kỳ text nào
+3. Click icon
+4. Click tab "Tóm tắt"
+5. Click sub-tab "Tóm tắt tất cả"
+6. Chờ → Sẽ tóm tắt toàn bộ nội dung trang
+```
+
+## Lỗi Thường Gặp & Cách Sửa
+
+### ❌ "Chưa cấu hình Gemini API key"
+
+**Nguyên nhân:** Bạn chưa thêm API key vào summarize.js
+
+**Giải pháp:**
+1. Mở `src/background/summarize.js`
+2. Thêm API key vào dòng `const GEMINI_API_KEY = "YOUR_API_KEY_HERE";`
+3. Reload extension
+
+### ❌ "API key không hợp lệ"
+
+**Nguyên nhân:** API key sai hoặc hết hạn
+
+**Giải pháp:**
+1. Kiểm tra lại API key từ [Google AI Studio](https://makersuite.google.com/app/apikeys)
+2. Đảm bảo copy toàn bộ key
+3. Thêm vào summarize.js
+4. Reload extension
+
+### ❌ "Quota exceeded"
+
+**Nguyên nhân:** Đã vượt quá giới hạn API miễn phí
+
+**Giải pháp:**
+- Chờ 24 giờ để quota reset
+- Hoặc nâng cấp tài khoản Google
+
+### ⚠️ Tóm tắt quá lâu
+
+**Nguyên nhân:** Trang quá dài, API cần xử lý nhiều text
+
+**Giải pháp:**
+- Là bình thường - chỉ cần chờ
+- Với trang rất dài, có thể mất 10-30 giây
+
+## Ứng dụng
+
+Tính năng tóm tắt rất hữu ích cho:
+- 📰 Đọc báo nhanh
+- 📚 Học nhanh từ bài viết dài
+- 🔍 Tìm kiếm thông tin chính
+- 📖 Tóm tắt Wiki
+- 📝 Ghi chú nhanh từ nội dung trang
 💡 **Mẹo 4:** Popup tự động thích ứng vị trí để không tràn ra ngoài  
 
 ## Hỏi đáp
