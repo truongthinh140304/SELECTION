@@ -1,317 +1,70 @@
-# 🚀 Hướng dẫn chạy Extension
+# 🚀 Hướng dẫn Cài đặt & Sử dụng Extension
 
-## Bước 1: Kiểm tra cấu trúc thư mục
+## Cài đặt (2 phút)
 
-Đảm bảo thư mục của bạn có cấu trúc như sau:
+1. **Mở trình duyệt** → `chrome://extensions` (hoặc `edge://extensions`)
+2. **Bật Developer mode** (góc trên phải)
+3. **Click "Load unpacked"** → Chọn thư mục dự án → OK
 
-```
-selection-translate-wiki-extension/
-├── manifest.json
-├── src/
-│   ├── background/
-│   │   ├── background.js
-│   │   ├── storage.js
-│   │   ├── highlight-storage.js
-│   │   ├── translate.js
-│   │   ├── wiki.js
-│   │   └── summarize.js
-│   └── content/
-│       ├── content.js
-│       ├── content.css
-│       └── highlight-dom.js
-├── assets/
-│   ├── icon-16.png
-│   ├── icon-48.png
-│   └── icon-128.png
-└── README.md
-```
+Extension sẽ hiển thị trong danh sách.
 
-## Bước 2: Mở Chrome (hoặc Edge)
+## Test Tính Năng
 
-1. Mở trình duyệt Chrome hoặc Microsoft Edge
-2. Gõ `chrome://extensions` hoặc `edge://extensions` vào thanh địa chỉ
-3. Nhấn Enter
+**Bôi đen text bất kỳ trên website** → Icon sẽ xuất hiện → Click icon:
+- **Tab "Dịch"**: Dịch text sang tiếng Việt
+- **Tab "Wiki"**: Lấy thông tin từ Wikipedia
 
-## Bước 3: Bật Developer Mode
+## Debug
 
-- Tìm **Developer mode** ở góc trên bên phải của trang
-- **Bật nó** (toggle sẽ chuyển sang màu xanh)
-
-## Bước 4: Load Extension
-
-1. Click nút **"Load unpacked"** (hoặc "Tải tiện ích chưa được đóng gói")
-2. Chọn thư mục `selection-translate-wiki-extension`
-3. Click "Select Folder"
-
-## Bước 5: Xác nhận Extension được cài
-
-Bạn sẽ thấy extension hiển thị trong danh sách:
-
-```
-[Icon] Selection Translate & Wiki
-ID: (some long id)
-Version: 1.0
-Enabled ✓
-```
-
-## Bước 6: Test Extension
-
-### Test trên bất kỳ website nào
-
-1. Mở website bất kỳ (ví dụ: https://www.wikipedia.org)
-2. **Bôi đen một đoạn text** (ví dụ: "Python programming")
-3. **Icon 🔧** sẽ xuất hiện cạnh text được bôi đen
-4. **Click icon** → Popup sẽ mở
-5. Tab **"Dịch"** sẽ hoạt động mặc định
-   - Bạn sẽ thấy loading spinner
-   - Sau vài giây, kết quả dịch sẽ hiển thị
-6. **Click tab "Wiki"**
-   - Loading spinner hiển thị
-   - Sau vài giây, thông tin Wikipedia sẽ hiển thị
-   - Bạn có thể click link để đọc bài viết đầy đủ
-
-### Test từng tính năng
-
-**Test Dịch:**
-```
-1. Bôi đen: "Hello World"
-2. Click icon
-3. Kết quả: "Xin chào thế giới"
-```
-
-**Test Wiki (tiếng Việt):**
-```
-1. Bôi đen: "Trí tuệ nhân tạo"
-2. Click icon
-3. Click tab "Wiki"
-4. Kết quả: Thông tin về AI từ Wikipedia tiếng Việt
-```
-
-**Test Wiki (tiếng Anh nếu Việt không có):**
-```
-1. Bôi đen: "Kubernetes"
-2. Click icon
-3. Click tab "Wiki"
-4. Kết quả: Thông tin từ Wikipedia tiếng Anh (vì Việt có thể không có)
-```
-
-## Bước 7: Xem Log & Debug
-
-### Xem log từ Content Script
-
-1. Mở website
-2. Bôi đen text để trigger icon
-3. Nhấn **F12** để mở Developer Tools
-4. Vào tab **Console**
-5. Bạn sẽ thấy các log như:
-   ```
-   Selection Translate & Wiki - Content script loaded
-   Text được bôi đen: REST API
-   Background received message: translate
-   ```
-
-### Xem log từ Background Service Worker
-
-1. Mở `chrome://extensions`
-2. Tìm "Selection Translate & Wiki"
-3. Click **"Service worker"** (link trong mô tả extension)
-4. DevTools sẽ mở với console của background
-5. Bôi đen text trên website, bạn sẽ thấy các log
-
-## Bước 8: Reload Extension (nếu sửa code)
-
-Nếu bạn sửa file code:
-
-1. Mở `chrome://extensions`
-2. Tìm "Selection Translate & Wiki"
-3. Click icon **reload** (hình tròn với mũi tên)
-4. Extension sẽ reload
-5. Mở lại website và test
+- **Content log**: Nhấn F12 trên website → Console
+- **Background log**: `chrome://extensions` → Click "Service worker"
+- **Reload**: `chrome://extensions` → Click icon reload
 
 ## Troubleshooting
 
-### Problem 1: Icon không xuất hiện khi bôi đen text
-
-**Giải pháp:**
-- Reload extension (click icon reload trên extensions page)
-- Refresh trang web (F5)
-- Kiểm tra console xem có error không
-- Tìm host_permissions trong manifest.json
-
-### Problem 2: Popup không mở khi click icon
-
-**Giải pháp:**
-- Kiểm tra console (F12 → Console)
-- Reload extension
-- Kiểm tra content.js có tồn tại không
-
-### Problem 3: Dịch hoặc Wiki không hoạt động
-
-**Giải pháp:**
-- Kiểm tra kết nối internet
-- Click "Service worker" để xem log từ background
-- Có thể API bị rate limit - chờ một chút rồi thử lại
-- Kiểm tra host_permissions trong manifest.json
-
-### Problem 4: "Could not load the extension"
-
-**Giải pháp:**
-- Kiểm tra manifest.json có valid JSON không (dùng jsonlint.com)
-- Kiểm tra tất cả file tồn tại
-- Không có lỗi cú pháp trong JavaScript files
-
-### Problem 5: "Manifest version 3 is required"
-
-**Giải pháp:**
-- Đảm bảo manifest.json có dòng:
-  ```json
-  "manifest_version": 3
-  ```
-
-## Test trên Edge (Microsoft Edge)
-
-Các bước tương tự:
-
-1. Mở `edge://extensions`
-2. Bật "Developer mode"
-3. Click "Load unpacked"
-4. Chọn thư mục extension
-
-## Gỡ cài đặt Extension
-
-Nếu muốn gỡ cài đặt:
-
-1. Mở `chrome://extensions`
-2. Tìm "Selection Translate & Wiki"
-3. Click nút **Remove** (thùng rác)
-4. Xác nhận
-
-## Các Website hay để test
-
-- https://en.wikipedia.org (có nhiều text để bôi đen)
-- https://github.com (code documentation)
-- https://developer.mozilla.org (technical articles)
-- https://medium.com (bài viết)
-- Bất kỳ blog hay trang tin nào có text
-
-## Mẹo
-
-💡 **Mẹo 1:** Click ra ngoài popup để đóng nó  
-💡 **Mẹo 2:** Bôi đen text khác sẽ di chuyển icon  
-💡 **Mẹo 3:** Bỏ chọn text (click vào trang) sẽ ẩn icon  
+| Vấn đề | Giải pháp |
+|--------|----------|
+| Icon không xuất hiện | Reload extension, F5 refresh trang |
+| Popup không mở | Kiểm tra console (F12), reload extension |
+| Dịch/Wiki không hoạt động | Kiểm tra internet, xem log background |
+| Lỗi "Could not load the extension" | Kiểm tra manifest.json (valid JSON?), tất cả file có tồn tại? |
 
 ---
 
-# 🎯 Hướng dẫn Tóm tắt với Gemini API
+# 🎯 Cấu hình Gemini API (Tóm tắt)
 
-## Bước 1: Lấy Gemini API Key
+## Lấy API Key (30 giây)
 
-1. Truy cập [Google AI Studio](https://makersuite.google.com/app/apikeys)
-2. Đăng nhập với tài khoản Google của bạn
-3. Click **"Create API Key"**
-4. Chọn **"Create API key in new project"** hoặc **"Create API key"**
-5. Copy API key (chuỗi dài như: `AIzaSy...`)
+1. Vào [Google AI Studio](https://makersuite.google.com/app/apikeys)
+2. Click **"Create API Key"**
+3. Copy key
 
-## Bước 2: Thêm API Key vào Extension
+## Thêm vào Extension
 
-1. Mở file `src/background/summarize.js`
-2. Tìm dòng:
-   ```javascript
-   const GEMINI_API_KEY = ""; // TODO: Thêm API key của bạn
-   ```
-3. Thay thế bằng:
-   ```javascript
-   const GEMINI_API_KEY = "YOUR_API_KEY_HERE";
-   ```
-   (Thay `YOUR_API_KEY_HERE` bằng API key bạn vừa copy)
-4. Lưu file
-
-## Bước 3: Reload Extension
-
-1. Mở `chrome://extensions`
-2. Tìm "Selection Translate & Wiki"
-3. Click icon reload
-4. Extension sẽ reload
-
-## Bước 4: Test Tóm tắt
-
-### Test Tóm tắt Đoạn:
-```
-1. Mở website bất kỳ
-2. Bôi đen một đoạn text (ví dụ: "Trí tuệ nhân tạo (AI) là lĩnh vực khoa học máy tính...")
-3. Click icon → Popup mở
-4. Click tab "Tóm tắt"
-5. Click sub-tab "Tóm tắt đoạn"
-6. Chờ vài giây → Sẽ hiển thị tóm tắt
-```
-
-### Test Tóm tắt Tất cả:
-```
-1. Mở website
-2. Bôi đen bất kỳ text nào
-3. Click icon
-4. Click tab "Tóm tắt"
-5. Click sub-tab "Tóm tắt tất cả"
-6. Chờ → Sẽ tóm tắt toàn bộ nội dung trang
-```
-
-## Lỗi Thường Gặp & Cách Sửa
-
-### ❌ "Chưa cấu hình Gemini API key"
-
-**Nguyên nhân:** Bạn chưa thêm API key vào summarize.js
-
-**Giải pháp:**
 1. Mở `src/background/summarize.js`
-2. Thêm API key vào dòng `const GEMINI_API_KEY = "YOUR_API_KEY_HERE";`
-3. Reload extension
+2. Tìm: `const GEMINI_API_KEY = ""`
+3. Sửa thành: `const GEMINI_API_KEY = "YOUR_KEY_HERE"`
+4. Lưu file
+5. Reload extension (`chrome://extensions` → click reload)
 
-### ❌ "API key không hợp lệ"
+## Test
 
-**Nguyên nhân:** API key sai hoặc hết hạn
+Bôi đen text → Click icon → Tab "Tóm tắt" → Click "Tóm tắt đoạn" hoặc "Tóm tắt tất cả"
 
-**Giải pháp:**
-1. Kiểm tra lại API key từ [Google AI Studio](https://makersuite.google.com/app/apikeys)
-2. Đảm bảo copy toàn bộ key
-3. Thêm vào summarize.js
-4. Reload extension
+## Lỗi?
 
-### ❌ "Quota exceeded"
+| Lỗi | Nguyên nhân | Sửa |
+|-----|-----------|-----|
+| "Chưa cấu hình Gemini API key" | Chưa thêm key vào summarize.js | Thêm key rồi reload |
+| "API key không hợp lệ" | Key sai/hết hạn | Lấy key mới từ Google AI Studio |
+| "Quota exceeded" | Vượt giới hạn miễn phí | Chờ 24h hoặc nâng cấp |
+| "Tóm tắt quá lâu" | Trang dài, API xử lý lâu | Bình thường, chỉ cần chờ |
 
-**Nguyên nhân:** Đã vượt quá giới hạn API miễn phí
+## FAQ
 
-**Giải pháp:**
-- Chờ 24 giờ để quota reset
-- Hoặc nâng cấp tài khoản Google
-
-### ⚠️ Tóm tắt quá lâu
-
-**Nguyên nhân:** Trang quá dài, API cần xử lý nhiều text
-
-**Giải pháp:**
-- Là bình thường - chỉ cần chờ
-- Với trang rất dài, có thể mất 10-30 giây
-
-## Ứng dụng
-
-Tính năng tóm tắt rất hữu ích cho:
-- 📰 Đọc báo nhanh
-- 📚 Học nhanh từ bài viết dài
-- 🔍 Tìm kiếm thông tin chính
-- 📖 Tóm tắt Wiki
-- 📝 Ghi chú nhanh từ nội dung trang
-💡 **Mẹo 4:** Popup tự động thích ứng vị trí để không tràn ra ngoài  
-
-## Hỏi đáp
-
-**Q: Extension có hoạt động offline không?**  
-A: Không, vì nó cần kết nối internet để gọi API Wikipedia và dịch.
-
-**Q: Có thể dịch sang ngôn ngữ khác không?**  
-A: Có, sửa `langpair=en|vi` trong `src/background/translate.js` thành ngôn ngữ khác.
-
-**Q: Extension này có gửi dữ liệu ra ngoài không?**  
-A: Có. Text được chọn sẽ được gửi tới MyMemory/Wikipedia khi bạn dùng tab Dịch/Wiki. Dữ liệu highlight và kho lưu trữ được lưu local bằng `chrome.storage.local`.
+**Q: Cần internet không?** A: Có, gọi API external.  
+**Q: Dịch sang ngôn ngữ khác được không?** A: Có, sửa `langpair=en|vi` trong `src/background/translate.js`.  
+**Q: Data gửi đâu?** A: Text → MyMemory/Wikipedia API. Highlight & storage lưu local.
 
 ---
 

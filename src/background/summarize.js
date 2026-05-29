@@ -2,7 +2,7 @@
  * Tóm tắt text sử dụng Gemini API.
  */
 
-const GEMINI_API_KEY = "AIzaSyA94EmqFLSsSbsYrkSkIW0PLqdu9qsSNcA"; // TODO: Thêm API key của bạn từ https://makersuite.google.com/app/apikeys
+const GEMINI_API_KEY = "AIzaSyBUBob1RZiAtcpp30QmmPUNW1KQg_31NoA"; // TODO: Thêm API key của bạn từ https://makersuite.google.com/app/apikeys
 
 const GEMINI_MODELS = ["gemini-3.1-flash-lite"];
 
@@ -25,23 +25,6 @@ async function summarizeSelection(text) {
         return await callGeminiApi(prompt);
     } catch (error) {
         throw new Error(`Lỗi tóm tắt: ${error.message}`);
-    }
-}
-
-/**
- * Tóm tắt toàn bộ nội dung trang
- */
-async function summarizeFullPage() {
-    try {
-        if (!GEMINI_API_KEY) {
-            throw new Error("Chưa cấu hình Gemini API key. Vui lòng thêm API key vào summarize.js");
-        }
-
-        // Lấy nội dung text từ trang thông qua content script
-        // Sẽ được xử lý thông qua message passing từ content script
-        throw new Error("Vui lòng gọi từ content script với nội dung trang");
-    } catch (error) {
-        throw new Error(`Lỗi tóm tắt trang: ${error.message}`);
     }
 }
 

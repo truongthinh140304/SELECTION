@@ -1,0 +1,41 @@
+﻿/* ===== Translate Button Styles ===== */
+
+.selection-popup-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 16px;
+    min-height: 100px;
+}
+
+.selection-popup-translate-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.35);
+}
+
+.selection-popup-translate-btn:hover {
+    background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.45);
+    transform: translateY(-3px);
+}
+
+.selection-popup-translate-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(76, 175, 80, 0.3);
+}
+
+.selection-popup-translate-btn span {
+    font-size: 16px;
+}

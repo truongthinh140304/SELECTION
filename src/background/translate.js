@@ -44,6 +44,9 @@ async function translateChunk(text) {
                     await new Promise(resolve => setTimeout(resolve, waitTime));
                     continue;
                 }
+                if (response.status === 429) {
+                    throw new Error("API dịch đang bị giới hạn lượt (429). Vui lòng chờ 1-2 phút rồi thử lại.");
+                }
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 

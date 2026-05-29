@@ -19,10 +19,24 @@
             ],
             "js": [
                 "src/content/highlight-dom.js",
-                "src/content/content.js"
+                "src/content/js/state.js",
+                "src/content/js/utils.js",
+                "src/content/js/popup-template.js",
+                "src/content/js/tab-translate.js",
+                "src/content/js/tab-wiki.js",
+                "src/content/js/tab-summarize.js",
+                "src/content/js/tab-storage.js",
+                "src/content/js/tab-highlight.js",
+                "src/content/js/popup-shell.js",
+                "src/content/js/selection.js"
             ],
             "css": [
-                "src/content/content.css"
+                "src/content/css/content-popup-base.css",
+                "src/content/css/content-storage.css",
+                "src/content/css/content-highlight.css",
+                "src/content/css/content-summarize.css",
+                "src/content/css/content-translate.css",
+                "src/content/css/content-dark.css"
             ],
             "run_at": "document_end"
         }
