@@ -2,7 +2,7 @@
  * Tóm tắt text sử dụng Gemini API.
  */
 
-const GEMINI_API_KEY = "AIzaSyBUBob1RZiAtcpp30QmmPUNW1KQg_31NoA"; // TODO: Thêm API key của bạn từ https://makersuite.google.com/app/apikeys
+const GEMINI_API_KEY = "";
 
 const GEMINI_MODELS = ["gemini-3.1-flash-lite"];
 

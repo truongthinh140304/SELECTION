@@ -67,7 +67,6 @@ function highlightTextInPage(text, color, id) {
             textNode.parentNode.replaceChild(wrapper, textNode);
         });
 
-        console.log(`Highlighted "${trimmed}" with color ${color}`);
         return true;
     } catch (error) {
         console.error("Error highlighting text:", error);
@@ -152,8 +151,6 @@ async function applyPageHighlights() {
     try {
         const pageUrl = window.location.href;
         const highlights = await getHighlightsForPage(pageUrl);
-
-        console.log(`Found ${highlights.length} highlights for this page`);
 
         highlights.forEach((hl) => {
             highlightTextInPage(hl.text, hl.color, hl.id);

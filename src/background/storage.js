@@ -38,6 +38,8 @@ async function saveToArchive(item) {
             text: item.text,
             translatedText: item.translatedText,
             wikipediaInfo: item.wikipediaInfo || null,
+            pageUrl: item.pageUrl || "",
+            pageTitle: item.pageTitle || "",
             savedAt: new Date().toISOString()
         };
 

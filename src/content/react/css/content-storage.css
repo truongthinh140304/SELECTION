@@ -95,6 +95,73 @@
     font-size: 14px;
 }
 
+.selection-popup-archive-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px 0;
+    flex-wrap: wrap;
+}
+
+.selection-popup-container .selection-popup-archive-search-input {
+    flex: 1;
+    min-width: 140px;
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    background-color: #ffffff;
+    color: #1f2937;
+    -webkit-text-fill-color: #1f2937;
+    appearance: none;
+}
+
+.selection-popup-container .selection-popup-archive-search-input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+.selection-popup-container .selection-popup-archive-search-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+    background-color: #ffffff;
+    color: #1f2937;
+}
+
+.selection-popup-container .selection-popup-archive-search-input:-webkit-autofill,
+.selection-popup-container .selection-popup-archive-search-input:-webkit-autofill:hover,
+.selection-popup-container .selection-popup-archive-search-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+    -webkit-text-fill-color: #1f2937;
+    caret-color: #1f2937;
+}
+
+.selection-popup-archive-search-btn {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    background-color: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.selection-popup-archive-search-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.selection-popup-archive-search-count {
+    width: 100%;
+    font-size: 11px;
+    color: #6b7280;
+    padding-bottom: 4px;
+}
+
 .selection-popup-archive-list {
     display: flex;
     flex-direction: column;
@@ -135,6 +202,48 @@
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.4;
+}
+
+.selection-popup-archive-item-page {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.selection-popup-archive-item-page-link {
+    flex: 1;
+    min-width: 0;
+    font-size: 11px;
+    color: #0066cc;
+    text-decoration: none;
+    word-break: break-all;
+    line-height: 1.4;
+}
+
+.selection-popup-archive-item-page-link:hover {
+    text-decoration: underline;
+    color: #0051a8;
+}
+
+.selection-popup-archive-page-search-btn {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    background-color: #fff;
+    border: 1px solid #bfdbfe;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #1d4ed8;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.selection-popup-archive-page-search-btn:hover {
+    background-color: #eff6ff;
+    border-color: #3b82f6;
 }
 
 .selection-popup-archive-item-meta {

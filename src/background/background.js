@@ -4,7 +4,7 @@
 
 importScripts("storage.js", "highlight-storage.js", "translate.js", "wiki.js", "summarize.js");
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     if (request.action === "translate") {
         handleTranslate(request.text, sendResponse);
     } else if (request.action === "searchWikipedia") {
@@ -56,24 +56,13 @@ function handleSearchWikipedia(text, sendResponse) {
 
 function handleSaveArchive(item, sendResponse) {
     saveToArchive(item)
-        .then((savedItem) =>
-            sendResponse({
-                success: true,
-                item: savedItem,
-                message: "Đã lưu thành công!"
-            })
-        )
+        .then(() => sendResponse({ success: true }))
         .catch((error) => sendResponse({ success: false, error: error.message }));
 }
 
 function handleDeleteArchiveItem(id, sendResponse) {
     deleteArchiveItem(id)
-        .then((deleted) =>
-            sendResponse({
-                success: deleted,
-                message: deleted ? "Đã xóa thành công!" : "Không tìm thấy item"
-            })
-        )
+        .then((deleted) => sendResponse({ success: deleted }))
         .catch((error) => sendResponse({ success: false, error: error.message }));
 }
 
@@ -109,13 +98,7 @@ function handleSummarizeFullPage(text, sendResponse) {
 
 function handleSaveUrlArchive(title, url, sendResponse) {
     saveUrlToArchive(title, url)
-        .then((item) =>
-            sendResponse({
-                success: true,
-                item: item,
-                message: "Đã lưu URL thành công!"
-            })
-        )
+        .then(() => sendResponse({ success: true }))
         .catch((error) => sendResponse({ success: false, error: error.message }));
 }
 
@@ -127,11 +110,6 @@ function handleGetUrlArchiveItems(sendResponse) {
 
 function handleDeleteUrlArchiveItem(id, sendResponse) {
     deleteUrlArchiveItem(id)
-        .then((deleted) =>
-            sendResponse({
-                success: deleted,
-                message: deleted ? "Đã xóa thành công!" : "Không tìm thấy item"
-            })
-        )
+        .then((deleted) => sendResponse({ success: deleted }))
         .catch((error) => sendResponse({ success: false, error: error.message }));
 }

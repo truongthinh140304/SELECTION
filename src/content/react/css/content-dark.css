@@ -1,11 +1,9 @@
 ﻿
 .selection-popup-container.dark {
     border-color: #444;
-}
-
-.selection-popup-container.dark {
     background-color: #1a1a1a;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
 }
 
 .selection-popup-container.dark .selection-popup-header {
@@ -158,6 +156,64 @@
 
 .selection-popup-container.dark .selection-popup-archive-item-translation {
     color: #b0b0b0;
+}
+
+.selection-popup-container.dark .selection-popup-archive-item-page-link {
+    color: #60a5fa;
+}
+
+.selection-popup-container.dark .selection-popup-archive-item-page-link:hover {
+    color: #93c5fd;
+}
+
+.selection-popup-container.dark .selection-popup-archive-page-search-btn {
+    background-color: #2d2d2d;
+    border-color: #3b5998;
+    color: #93c5fd;
+}
+
+.selection-popup-container.dark .selection-popup-archive-page-search-btn:hover {
+    background-color: #1e3a5f;
+    border-color: #60a5fa;
+}
+
+.selection-popup-container.dark .selection-popup-archive-search-input {
+    background-color: #2d2d2d;
+    border-color: #444;
+    color: #e5e7eb;
+    -webkit-text-fill-color: #e5e7eb;
+}
+
+.selection-popup-container.dark .selection-popup-archive-search-input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+.selection-popup-container.dark .selection-popup-archive-search-input:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+    background-color: #2d2d2d;
+    color: #e5e7eb;
+}
+
+.selection-popup-container.dark .selection-popup-archive-search-input:-webkit-autofill,
+.selection-popup-container.dark .selection-popup-archive-search-input:-webkit-autofill:hover,
+.selection-popup-container.dark .selection-popup-archive-search-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #2d2d2d inset;
+    -webkit-text-fill-color: #e5e7eb;
+    caret-color: #e5e7eb;
+}
+
+.selection-popup-container.dark .selection-popup-archive-search-btn {
+    background-color: #2563eb;
+}
+
+.selection-popup-container.dark .selection-popup-archive-search-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.selection-popup-container.dark .selection-popup-archive-search-count {
+    color: #9ca3af;
 }
 
 .selection-popup-container.dark .selection-popup-archive-item-date {
