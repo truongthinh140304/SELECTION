@@ -1,5 +1,3 @@
-import { escapeHtml } from "../utils/escapeHtml.js";
-
 export function Loading({ children }) {
     return (
         <div className="selection-popup-loading">
@@ -14,5 +12,5 @@ export function ErrorMessage({ message }) {
 }
 
 export function SafeHtml({ text, className }) {
-    return <div className={className} dangerouslySetInnerHTML={{ __html: escapeHtml(text ?? "") }} />;
+    return <div className={className}>{text ?? ""}</div>;
 }

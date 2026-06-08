@@ -29,7 +29,9 @@
         }
     ],
     "background": {
-        "service_worker": "src/background/background.js"
+        "scripts": [
+            "src/background/background.js"
+        ]
     },
     "action": {
         "default_title": "Selection Translate & Wiki"
@@ -39,5 +41,15 @@
         "32": "assets/icon-32.png",
         "48": "assets/icon-48.png",
         "128": "assets/icon-128.png"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "selection-translate-wiki@truongthinh140304.github.io",
+            "data_collection_permissions": {
+                "required": [
+                    "none"
+                ]
+            }
+        }
     }
 }

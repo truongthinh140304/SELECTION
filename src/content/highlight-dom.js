@@ -19,14 +19,46 @@ async function getHighlightsForPage(pageUrl) {
 function shouldSkipHighlightNode(node) {
     const parent = node.parentElement;
     if (!parent) return true;
+
     if (parent.closest(".selection-popup-container, .selection-popup-icon")) {
         return true;
     }
+
     if (parent.closest(`.${HIGHLIGHT_CLASS}`)) {
         return true;
     }
+
     const tag = parent.tagName;
     return tag === "SCRIPT" || tag === "STYLE" || tag === "NOSCRIPT";
+}
+
+function createHighlightedFragment(text, pattern, color, id, highlightText) {
+    const fragment = document.createDocumentFragment();
+    let lastIndex = 0;
+
+    text.replace(pattern, (match, _group, offset) => {
+        if (offset > lastIndex) {
+            fragment.appendChild(document.createTextNode(text.slice(lastIndex, offset)));
+        }
+
+        const mark = document.createElement("mark");
+        mark.className = HIGHLIGHT_CLASS;
+        mark.style.backgroundColor = color;
+        mark.dataset.highlightId = id;
+        mark.dataset.highlightText = highlightText;
+        mark.textContent = match;
+
+        fragment.appendChild(mark);
+
+        lastIndex = offset + match.length;
+        return match;
+    });
+
+    if (lastIndex < text.length) {
+        fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+    }
+
+    return fragment;
 }
 
 function highlightTextInPage(text, color, id) {
@@ -45,6 +77,7 @@ function highlightTextInPage(text, color, id) {
 
         while ((node = walker.nextNode())) {
             if (shouldSkipHighlightNode(node)) continue;
+
             if (node.textContent.includes(trimmed)) {
                 nodesToReplace.push(node);
             }
@@ -59,12 +92,15 @@ function highlightTextInPage(text, color, id) {
         const pattern = new RegExp(`(${escaped})`, "g");
 
         nodesToReplace.forEach((textNode) => {
-            const wrapper = document.createElement("span");
-            wrapper.innerHTML = textNode.textContent.replace(
+            const fragment = createHighlightedFragment(
+                textNode.textContent,
                 pattern,
-                `<mark class="${HIGHLIGHT_CLASS}" style="background-color: ${color}" data-highlight-id="${id}" data-highlight-text="${escapeHtmlAttr(trimmed)}">$1</mark>`
+                color,
+                id,
+                trimmed
             );
-            textNode.parentNode.replaceChild(wrapper, textNode);
+
+            textNode.parentNode.replaceChild(fragment, textNode);
         });
 
         return true;
@@ -74,20 +110,14 @@ function highlightTextInPage(text, color, id) {
     }
 }
 
-function escapeHtmlAttr(text) {
-    return text
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-}
-
 function unwrapHighlightElement(el) {
     const parent = el.parentNode;
     if (!parent) return;
+
     while (el.firstChild) {
         parent.insertBefore(el.firstChild, el);
     }
+
     parent.removeChild(el);
     parent.normalize();
 }
@@ -101,6 +131,7 @@ function setupHighlightHover(highlightId) {
 
         hl.addEventListener("mouseenter", () => {
             let deleteBtn = hl.querySelector(".selection-highlight-delete");
+
             if (!deleteBtn) {
                 deleteBtn = document.createElement("button");
                 deleteBtn.type = "button";
@@ -113,6 +144,7 @@ function setupHighlightHover(highlightId) {
                     e.stopPropagation();
 
                     const pageUrl = window.location.href;
+
                     chrome.runtime.sendMessage(
                         {
                             action: "deleteHighlight",
@@ -124,6 +156,7 @@ function setupHighlightHover(highlightId) {
                                 console.error(chrome.runtime.lastError);
                                 return;
                             }
+
                             if (response?.success) {
                                 document
                                     .querySelectorAll(`[data-highlight-id="${highlightId}"]`)
@@ -135,11 +168,13 @@ function setupHighlightHover(highlightId) {
 
                 hl.appendChild(deleteBtn);
             }
+
             deleteBtn.style.display = "inline";
         });
 
         hl.addEventListener("mouseleave", () => {
             const deleteBtn = hl.querySelector(".selection-highlight-delete");
+
             if (deleteBtn) {
                 deleteBtn.style.display = "none";
             }

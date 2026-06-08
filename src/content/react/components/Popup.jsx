@@ -1,12 +1,9 @@
 import { forwardRef } from "react";
-import { escapeHtml } from "../utils/escapeHtml.js";
 
 export const Popup = forwardRef(function Popup(
     { isDark, position, selectedText, children, header, tabs },
     ref
 ) {
-    const safeText = escapeHtml(selectedText ?? "");
-
     return (
         <div
             ref={ref}
@@ -16,10 +13,9 @@ export const Popup = forwardRef(function Popup(
             {header}
             {tabs}
             <div className="selection-popup-content">
-                <div
-                    className="selection-popup-selected-text"
-                    dangerouslySetInnerHTML={{ __html: safeText }}
-                />
+                <div className="selection-popup-selected-text">
+                    {selectedText ?? ""}
+                </div>
                 {children}
             </div>
         </div>
